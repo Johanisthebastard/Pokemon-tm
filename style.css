@@ -147,3 +147,28 @@ button {
   button:hover {
 	background-color: rgb(79, 90, 248);
   }
+
+  #pokemonSearchInput {
+  
+	padding: 5px;
+    width: 200px;
+    font-size: 15px;
+    border: 2px solid rgb(247, 223, 90);
+    outline: none;
+  
+  }
+
+  input[id^="nickname-"] {
+    padding: 5px;
+    margin-top: 5px;
+    font-size: px;
+    border: 2px solid rgb(247, 223, 90);
+   
+}
+
+.card-info {
+	color: orangered;
+	font-weight: bold;
+	background-color: rgb(247, 223, 90);
+	padding: 0.5em;
+}
