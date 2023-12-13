@@ -72,34 +72,80 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+
     function displayPokemon(pokemon) {
-        const pokemonHTMLString = pokemon.map(individ => `
+        const pokemonHTMLString = pokemon.map((individ, index) => `
             <li class="card">
-                <img class="card-image"src="${individ.image}"/>
+                <img class="card-image" src="${individ.image}"/>
                 <h3 class="card-title">${individ.id}. ${individ.name}</h3>
                 <p class="card-info">Type: ${individ.type}</p>
-                <button class="add-to-team">Add to Team</button>
+                <label for="nickname-${index}">Nickname:</label>
+                <input type="text" id="nickname-${index}" placeholder="Enter nickname">
+                <button class="add-to-team" data-index="${index}">Add to Team</button>
             </li>
-        `)
-        .join('');
+        `).join('');
 
         pokedex.innerHTML = pokemonHTMLString;
 
         // Update addToTeamButtons after re-rendering pokedex
         addToTeamButtons = document.querySelectorAll('.add-to-team');
 
-        addToTeamButtons.forEach((button, index) => {
+        addToTeamButtons.forEach((button) => {
+			button.addEventListener('click', function () {
+				const selectedIndex = button.dataset.index;
+				const nicknameInput = document.getElementById(`nickname-${selectedIndex}`);
+				const nickname = nicknameInput.value;
+				
+				const selectedPokemon = { ...pokemon[selectedIndex], name: nickname || pokemon[selectedIndex].name };
+	
+				if (myTeam.length < 3) {
+					myTeam.push(selectedPokemon);
+					displayMyTeam();
+					showConfirmation(`Added ${nickname || pokemon[selectedIndex].name} to team`);
+				} else {
+					showConfirmation('Your Team is full! Remove a Pokemon before adding a new one.');
+				}
+			});
+		});
+
+    }
+
+
+    function hidePokemon(index) {
+        const hiddenPokemon = pokedex.children[index];
+        hiddenPokemon.style.display = 'none';
+    }
+
+    function displayMyTeam() {
+        const myTeamHTMLString = myTeam.map((pokemon, index) => `
+            <li class="card">
+                <img class="card-image" src="${pokemon.image}"/>
+                <h3 class="card-title">${pokemon.id}. ${pokemon.name}</h3>
+                <p class="card-info">Type: ${pokemon.type}</p>
+                <button class="kick-champion" data-index="${index}">Remove Champion</button>
+            </li>
+        `).join('');
+
+        myTeamBox.innerHTML = myTeamHTMLString;
+
+        // Update kickChampionButtons after re-rendering myTeamBox
+        kickChampionButtons = document.querySelectorAll('.kick-champion');
+
+        kickChampionButtons.forEach((button) => {
             button.addEventListener('click', function () {
-                if (myTeam.length < 3) {
-                    const selectedPokemon = pokemon[index];
-                    myTeam.push(selectedPokemon);
-                    displayMyTeam();
-                    showConfirmation(`Added ${selectedPokemon.name} to team`);
-                } else {
-                    alert('My Team is full! Remove a Pokemon before adding a new one.');
-                }
+                const selectedIndex = button.dataset.index;
+                const removedPokemon = myTeam[selectedIndex];
+                myTeam.splice(selectedIndex, 1);
+                displayMyTeam();
+                showConfirmation(`Removed ${removedPokemon.name} from team`);
+                showPokemon(selectedIndex);
             });
         });
+    }
+
+    function showPokemon(index) {
+        const shownPokemon = pokedex.children[index];
+        shownPokemon.style.display = 'block';
     }
 
     function showConfirmation(message) {
