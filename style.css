@@ -13,6 +13,7 @@
 	justify-content: center;
 	border: 2px solid rgb(79, 90, 248);
 	border-radius: 1em 1em 0 0;
+	cursor: url('oppen.png'), auto;
 	
   }
 
@@ -31,6 +32,7 @@
   header a {
 	text-decoration: none;
 	font-size: 50px;
+	cursor: url('oppen.png'), auto;
 	
   }
 
@@ -49,6 +51,7 @@
 	text-decoration: none;
 	color: rgb(79, 90, 248);
 	font-weight: bold;
+	cursor: url('oppen.png'), auto;
 	
 	
   }
@@ -99,4 +102,21 @@
 	margin-top: 17px;
   }
 
+  .card {
+	background-color: rgb(232, 231, 231);
+	list-style: none;
+	border: 1px solid black;
+	cursor: url('point.png'), auto;
+	margin: 4px;
+	
+	
+  }
+
+  #pokedex {
+	padding-inline-start: 0;
+  }
   
+  .card-title {
+	text-transform: uppercase;
+	
+  }
