@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-
+	// mina fasta variabler som snackar med olika dom-element genom id, och manipulera innehållet
     const pokemonFinderLink = document.getElementById('pokemonFinderLink');
     const myTeamLink = document.getElementById('myTeamLink');
     const mainImage = document.getElementById('mainImage');
@@ -8,11 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const pokedex = document.getElementById("pokedex");
     const searchInput = document.getElementById('pokemonSearchInput');
 
+	// mina variabler för pokemonlagring
     let addToTeamButtons;
     let kickChampionButtons;
     let myTeam = [];
     let allPokemon = [];
 
+	//Ändra synlighet för olika sections baserat på userchoice
     pokemonFinderLink.addEventListener('click', function (event) {
         event.preventDefault();
         mainImage.style.display = 'none';
@@ -26,17 +28,19 @@ document.addEventListener('DOMContentLoaded', function () {
         myTeamBox.style.display = 'block';
         pokemonFinderBox.style.display = 'none';
         displayMyTeam();
+		
     });
-
+	
+	//inputlistener som anropar och filtrerar baserat på inmatning
     searchInput.addEventListener('input', function () {
         filterPokemon();
     });
-
+	//filtrerar pokedexen eller myteam beroende på vilket som är synligt och visar matchande input
     function filterPokemon() {
         const searchQuery = searchInput.value.toLowerCase();
 
         if (myTeamBox.style.display === 'block') {
-            // Filter for My Team
+            // Filter för MY TEAM
             const filteredMyTeam = myTeam.filter((p) => p.name.toLowerCase().includes(searchQuery));
 
             const myTeamHTMLString = filteredMyTeam
@@ -52,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             myTeamBox.innerHTML = myTeamHTMLString;
 
-            // Update kickChampionButtons after re-rendering myTeamBox
+            
             kickChampionButtons = document.querySelectorAll('.kick-champion');
 
             kickChampionButtons.forEach((button) => {
@@ -83,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             pokedex.innerHTML = pokemonHTMLString;
 
-            // Resten av din kod för att hantera knappklick och annat
+            // Gör så namnet på pokemon visas, om jag inte gett ett nick och är det > 3, visa att det är fullt
             addToTeamButtons = document.querySelectorAll('.add-to-team');
 
             addToTeamButtons.forEach((button) => {
@@ -106,7 +110,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+	//Visar pokemonzz på myteamsidan, generera html för varje individ, eventlistener för att ta bort
     function displayMyTeam() {
+		//skapa en sträng för varje pokem0nzz i myteam/gör till en enda sträng
         const myTeamHTMLString = myTeam.map((pokemon, index) => `
             <li class="card">
                 <img class="card-image" src="${pokemon.image}"/>
@@ -118,20 +124,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
         myTeamBox.innerHTML = myTeamHTMLString;
 
-        // Update kickChampionButtons after re-rendering myTeamBox
+        // Updatera knapp efter myteambox omrenderats
         kickChampionButtons = document.querySelectorAll('.kick-champion');
 
+		//eventlistener lägg till ny efter varje knapp med kick-champ.
         kickChampionButtons.forEach((button) => {
             button.addEventListener('click', function () {
-                const selectedIndex = button.dataset.index;
-                const removedPokemon = myTeam[selectedIndex];
-                myTeam.splice(selectedIndex, 1);
-                displayMyTeam();
+                //hämta valt index från data index
+				const selectedIndex = button.dataset.index;
+                
+				//hämta borttagen pokemon från team baserat på valt index
+				const removedPokemon = myTeam[selectedIndex];
+                //ta bort borttagen pokemon från team
+				myTeam.splice(selectedIndex, 1);
+                //kalla på display för att uppdatera visning av team
+				displayMyTeam();
                 showConfirmation(`Removed ${removedPokemon.name} from team`);
             });
         });
     }
 
+	//Hämta pokemon från API --! ÄNDRA TILL 150 när den ska visas! !--
     function fetchPokemon() {
         const promises = [];
         for (let i = 1; i <= 5; i++) {
@@ -164,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         pokedex.innerHTML = pokemonHTMLString;
 
-        // Update addToTeamButtons after re-rendering pokedex
+        // Uppdatera addToTeamButtons
         addToTeamButtons = document.querySelectorAll('.add-to-team');
 
         addToTeamButtons.forEach((button) => {
@@ -185,12 +198,14 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
-
+	
+	// GÖmma pokemon i index pokedex
     function hidePokemon(index) {
+		//Hämta pokemonelement med angivet index och ändra display none/block
         const hiddenPokemon = pokedex.children[index];
         hiddenPokemon.style.display = 'none';
     }
-
+	
     function showPokemon(index) {
         const shownPokemon = pokedex.children[index];
         shownPokemon.style.display = 'block';
@@ -201,7 +216,9 @@ document.addEventListener('DOMContentLoaded', function () {
         confirmationMessage.className = 'confirmation';
         confirmationMessage.textContent = message;
         document.body.appendChild(confirmationMessage);
+		//Antingen att jag tog bort pokemon, lade till eller team full. ändra i 'showconfirmation'
 
+		// ta bort bekräftelse efter 2 sek
         setTimeout(() => {
             document.body.removeChild(confirmationMessage);
         }, 2000);
