@@ -76,12 +76,7 @@
 	display: none;
   }
 
-  @media (min-width: 600px) {
-	main {
-	  max-width: 600px;
-	  margin: 0 auto;
-	}
-  }
+
 
   .grej {
 	color: rgb(255, 255, 255);
@@ -172,3 +167,10 @@ button {
 	background-color: rgb(247, 223, 90);
 	padding: 0.5em;
 }
+
+@media (min-width: 600px) {
+	main {
+	  max-width: 600px;
+	  margin: 0 auto;
+	}
+  }

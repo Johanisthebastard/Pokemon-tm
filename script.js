@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-	// mina fasta variabler som snackar med olika dom-element genom id, och manipulera innehållet
+	// mina fasta variabler som snackar med olika dom-element genom id, och manipulera innehållet lägg i domfil
     const pokemonFinderLink = document.getElementById('pokemonFinderLink');
     const myTeamLink = document.getElementById('myTeamLink');
     const mainImage = document.getElementById('mainImage');
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	//Hämta pokemon från API --! ÄNDRA TILL 150 när den ska visas! !--
     function fetchPokemon() {
         const promises = [];
-        for (let i = 1; i <= 5; i++) {
+        for (let i = 1; i <= 20; i++) {
             const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
             promises.push(fetch(url).then((res) => res.json()));
         }
