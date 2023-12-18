@@ -96,7 +96,33 @@
 	width: 100%;
 	height: auto;
 	margin-top: 17px;
+	animation: wiggle 4s infinite;
   }
+
+  @keyframes wiggle {
+	0%, 7% {
+	  transform: rotateZ(0);
+	}
+	15% {
+	  transform: rotateZ(-15deg);
+	}
+	20% {
+	  transform: rotateZ(40deg);
+	}
+	25% {
+	  transform: rotateZ(-20deg);
+	}
+	30% {
+	  transform: rotateZ(6deg);
+	}
+	35% {
+	  transform: rotateZ(-4deg);
+	}
+	40%, 100% {
+	  transform: rotateZ(0);
+	}
+  }
+  
 
   .card {
 	background-color: rgb(232, 231, 231);
@@ -193,5 +219,21 @@ button {
 	color: rgb(247, 223, 90);
 	margin-bottom: -1em;
 	display: none;
+	
+}
+
+.a {
+	display: flex;
+	justify-content: center;
+}
+
+.b {
+	display: flex;
+	justify-content: center;
+}
+
+.theme {
+	opacity: 50%;
+	margin-top: 1em;
 	
 }
