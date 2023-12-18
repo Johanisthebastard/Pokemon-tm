@@ -144,13 +144,26 @@ button {
   }
 
   #pokemonSearchInput {
-  
+	margin-top: 0.4em;
 	padding: 5px;
     width: 200px;
     font-size: 15px;
     border: 2px solid rgb(247, 223, 90);
     outline: none;
+	display: none;
+
   
+  }
+
+  #reserveSearchInput {
+	margin-top: 1.5em;
+	padding: 5px;
+    width: 200px;
+    font-size: 15px;
+    border: 2px solid rgb(247, 223, 90);
+    outline: none;
+	display: none;
+	
   }
 
   input[id^="nickname-"] {
@@ -174,3 +187,11 @@ button {
 	  margin: 0 auto;
 	}
   }
+
+  
+#teamText, #reserveText {
+	color: rgb(247, 223, 90);
+	margin-bottom: -1em;
+	display: none;
+	
+}
