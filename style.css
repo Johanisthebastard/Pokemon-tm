@@ -235,5 +235,13 @@ button {
 .theme {
 	opacity: 50%;
 	margin-top: 1em;
-	
+
+}
+
+#teamFullMessage {
+	color: orangered;
+	font-size: 20px;
+	font-weight: bold;
+	margin: 1em;
+	background-color: rgb(247, 223, 90);
 }

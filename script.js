@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-	//variabler fasta
+    //variabler fasta
     const pokemonFinderLink = document.getElementById('pokemonFinderLink');
     const myTeamLink = document.getElementById('myTeamLink');
     const mainImage = document.getElementById('mainImage');
@@ -9,27 +9,30 @@ document.addEventListener('DOMContentLoaded', function () {
     const pokedex = document.getElementById("pokedex");
     const searchInput = document.getElementById('pokemonSearchInput');
     const reserveSearchInput = document.getElementById('reserveSearchInput');
+    const teamFullMessage = document.getElementById('teamFullMessage'); // Added line
+    const teamText = document.getElementById('teamText'); // Added line
+    const reserveText = document.getElementById('reserveText'); // Added line
+
     //variabler lösa
-	let addToTeamButtons;
+    let addToTeamButtons;
     let removeFromReserveButtons;
     let kickChampionButtons;
     let myTeam = [];
     let allPokemon = [];
     let allReservePokemon = [];
 
-	//clickevents, visa/visa inte
+    //clickevents, visa/visa inte
     pokemonFinderLink.addEventListener('click', function (event) {
         event.preventDefault();
         mainImage.style.display = 'none';
         pokemonFinderBox.style.display = 'block';
         myTeamBox.style.display = 'none';
         myReserveBox.style.display = 'none';
-		teamText.style.display = 'none';
+        teamText.style.display = 'none';
         reserveText.style.display = 'none';
-		reserveSearchInput.style.display = 'none';
-		pokemonSearchInput.style.display = 'block';
+        reserveSearchInput.style.display = 'none';
+        searchInput.style.display = 'block';
 		
-	
     });
 
     myTeamLink.addEventListener('click', function (event) {
@@ -38,21 +41,19 @@ document.addEventListener('DOMContentLoaded', function () {
         myTeamBox.style.display = 'block';
         pokemonFinderBox.style.display = 'none';
         myReserveBox.style.display = 'block';
-		teamText.style.display = 'block';
+        teamText.style.display = 'block';
         reserveText.style.display = 'block';
-		reserveSearchInput.style.display = 'block';
-		pokemonSearchInput.style.display = 'block';
+        reserveSearchInput.style.display = 'block';
+        searchInput.style.display = 'block';
         displayMyTeam();
     });
 
-	//sök pokemon på laget
-
+    //sök pokemon på laget
     searchInput.addEventListener('input', function () {
         filterPokemon();
     });
 
-	//sök pokemon i reserve
-
+    //sök pokemon i reserve
     reserveSearchInput.addEventListener('input', function () {
         filterReservePokemon();
     });
@@ -75,8 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             myTeamBox.innerHTML = myTeamHTMLString;
 
-
-			//sparka pokemon
+            //sparka pokemon
             kickChampionButtons = document.querySelectorAll('.kick-champion');
 
             kickChampionButtons.forEach((button) => {
@@ -88,6 +88,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     showConfirmation(`Removed ${removedPokemon.name} from team`);
                 });
             });
+
+            // Check if the team is full and display the message
+            if (myTeam.length >= 3) {
+                teamFullMessage.style.display = 'block';
+            } else {
+                teamFullMessage.style.display = 'none';
+            }
         } else {
             const filteredPokemon = allPokemon.filter((p) => p.name.toLowerCase().includes(searchQuery));
             const pokemonHTMLString = filteredPokemon
@@ -104,7 +111,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 .join('');
 
             pokedex.innerHTML = pokemonHTMLString;
-			//lägg till i lag
+
+            //lägg till i lag
             addToTeamButtons = document.querySelectorAll('.add-to-team');
 
             addToTeamButtons.forEach((button) => {
@@ -114,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const nickname = nicknameInput.value;
 
                     const selectedPokemon = { ...filteredPokemon[selectedIndex], name: nickname || filteredPokemon[selectedIndex].name };
-					//om man lämnar nickname blankt så ska den få sitt originalnamn
+                    //om man lämnar nickname blankt så ska den få sitt originalnamn
                     if (myTeam.length < 3) {
                         myTeam.push(selectedPokemon);
                         displayMyTeam();
@@ -125,6 +133,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
             });
+
+            // Check if the team is full and display the message
+            if (myTeam.length >= 3) {
+                teamFullMessage.style.display = 'block';
+            } else {
+                teamFullMessage.style.display = 'none';
+            }
         }
     }
 
@@ -144,9 +159,8 @@ document.addEventListener('DOMContentLoaded', function () {
             .join('');
 
         myReserveBox.innerHTML = reservePokemonHTMLString;
-		
 
-		// ta bort från reserve
+        // ta bort från reserve
         removeFromReserveButtons = document.querySelectorAll('.remove-from-reserve');
 
         removeFromReserveButtons.forEach((button) => {
@@ -183,6 +197,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 showConfirmation(`Removed ${removedPokemon.name} from team`);
             });
         });
+
+        // Check if the team is full and display the message
+        if (myTeam.length >= 3) {
+            teamFullMessage.style.display = 'block';
+        } else {
+            teamFullMessage.style.display = 'none';
+        }
     }
 
     function addToReserve(pokemon) {
@@ -202,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 2000);
     }
 
-	//plocka från api
+    //plocka från api
     function fetchPokemon() {
         const promises = [];
         for (let i = 1; i <= 20; i++) {
@@ -217,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 image: data.sprites['front_default'],
                 type: data.types.map((type) => type.type.name).join(', ')
             }));
-            allReservePokemon = []; 
+            allReservePokemon = [];
             displayPokemon(allPokemon);
         });
     }
