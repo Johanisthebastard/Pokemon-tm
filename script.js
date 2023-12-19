@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const pokedex = document.getElementById("pokedex");
     const searchInput = document.getElementById('pokemonSearchInput');
     const reserveSearchInput = document.getElementById('reserveSearchInput');
-    const teamFullMessage = document.getElementById('teamFullMessage'); // Added line
-    const teamText = document.getElementById('teamText'); // Added line
-    const reserveText = document.getElementById('reserveText'); // Added line
+    const teamFullMessage = document.getElementById('teamFullMessage'); 
+    const teamText = document.getElementById('teamText'); 
+    const reserveText = document.getElementById('reserveText'); 
 
     //variabler lösa
     let addToTeamButtons;
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //plocka från api
     function fetchPokemon() {
         const promises = [];
-        for (let i = 1; i <= 20; i++) {
+        for (let i = 1; i <= 150; i++) {
             const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
             promises.push(fetch(url).then((res) => res.json()));
         }
